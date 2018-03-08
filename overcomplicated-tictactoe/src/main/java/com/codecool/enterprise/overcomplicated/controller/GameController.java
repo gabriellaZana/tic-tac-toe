@@ -2,6 +2,8 @@ package com.codecool.enterprise.overcomplicated.controller;
 
 import com.codecool.enterprise.overcomplicated.model.Player;
 import com.codecool.enterprise.overcomplicated.model.TictactoeGame;
+import com.codecool.enterprise.overcomplicated.services.FunFactService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @SessionAttributes({"player", "game"})
 public class GameController {
+    @Autowired
+    FunFactService funFactService;
 
     @ModelAttribute("player")
     public Player getPlayer() {
@@ -31,13 +35,13 @@ public class GameController {
     }
 
     @PostMapping(value="/changeplayerusername")
-    public String changPlayerUserName(@ModelAttribute Player player) {
+    public String changePlayerUserName(@ModelAttribute Player player) {
         return "redirect:/game";
     }
 
     @GetMapping(value = "/game")
-    public String gameView(@ModelAttribute("player") Player player, Model model) {
-        model.addAttribute("funfact", "&quot;Chuck Norris knows the last digit of pi.&quot;");
+    public String gameView(@ModelAttribute("player") Player player, Model model) throws Exception {
+        model.addAttribute("funfact", funFactService.getFunfact());
         model.addAttribute("comic_uri", "https://imgs.xkcd.com/comics/bad_code.png");
         return "game";
     }
