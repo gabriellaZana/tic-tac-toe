@@ -2,6 +2,7 @@ package com.codecool.enterprise.overcomplicated.controller;
 
 import com.codecool.enterprise.overcomplicated.model.Player;
 import com.codecool.enterprise.overcomplicated.model.TictactoeGame;
+import com.codecool.enterprise.overcomplicated.services.AvatarService;
 import com.codecool.enterprise.overcomplicated.services.ComicsService;
 import com.codecool.enterprise.overcomplicated.services.FunFactService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +11,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@SessionAttributes({"player", "game"})
+@SessionAttributes({"player", "game", "avatar_uri"})
 public class GameController {
     @Autowired
     FunFactService funFactService;
 
     @Autowired
     ComicsService comicsService;
+
+    @Autowired
+    AvatarService avatarService;
 
 
     @ModelAttribute("player")
@@ -30,8 +34,8 @@ public class GameController {
     }
 
     @ModelAttribute("avatar_uri")
-    public String getAvatarUri() {
-        return "https://robohash.org/codecool";
+    public String getAvatarUri() throws Exception {
+        return avatarService.getAvatar();
     }
 
     @GetMapping(value = "/")
