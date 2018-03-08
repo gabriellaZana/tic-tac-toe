@@ -2,6 +2,7 @@ package com.codecool.enterprise.overcomplicated.controller;
 
 import com.codecool.enterprise.overcomplicated.model.Player;
 import com.codecool.enterprise.overcomplicated.model.TictactoeGame;
+import com.codecool.enterprise.overcomplicated.services.ComicsService;
 import com.codecool.enterprise.overcomplicated.services.FunFactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,10 @@ import org.springframework.web.bind.annotation.*;
 public class GameController {
     @Autowired
     FunFactService funFactService;
+
+    @Autowired
+    ComicsService comicsService;
+
 
     @ModelAttribute("player")
     public Player getPlayer() {
@@ -42,7 +47,7 @@ public class GameController {
     @GetMapping(value = "/game")
     public String gameView(@ModelAttribute("player") Player player, Model model) throws Exception {
         model.addAttribute("funfact", funFactService.getFunfact());
-        model.addAttribute("comic_uri", "https://imgs.xkcd.com/comics/bad_code.png");
+        model.addAttribute("comic_uri", comicsService.getComic());
         return "game";
     }
 
