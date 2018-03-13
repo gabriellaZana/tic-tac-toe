@@ -24,7 +24,7 @@ public class GameController {
     AvatarService avatarService;
 
     @Autowired
-    MoveService aiService;
+    MoveService moveService;
 
     @Autowired
     TictactoeGame game;
@@ -65,7 +65,7 @@ public class GameController {
     @GetMapping(value = "/game-move")
     public String gameMove(@ModelAttribute("player") Player player, @ModelAttribute("move") int move) {
         System.out.println("Player moved " + move);
-        aiService.getAiMove();
+        moveService.moveLogic(move);
         return "redirect:/game";
     }
 }

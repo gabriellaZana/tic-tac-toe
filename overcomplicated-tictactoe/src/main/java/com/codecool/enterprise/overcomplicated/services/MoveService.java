@@ -17,10 +17,6 @@ public class MoveService {
 
     private static final String AI_SERVICE_URL = "http://localhost:60004/get-ai-move";
 
-    public String getAiMove() {
-        return AI_SERVICE_URL;
-    }
-
     public void moveLogic(int move) {
         game.setGameState(move, "X");
         int numberFromAPI = getNumberFromApi();
@@ -41,7 +37,7 @@ public class MoveService {
             e.printStackTrace();
         }
 
-        AiMove move = g.fromJson(json, AiMove.class);
-        return move.getMove();
+        int move = Integer.valueOf(json);
+        return move;
     }
 }
